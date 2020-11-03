@@ -47,12 +47,12 @@ Windows is supported only for a limited set of developer tools, see [Install dev
 
 This section addresses Policy Studio, Configuration Studio, Package and Deployment Tools only.
 
-API Gateway supports the following software versions:
+Developer tools supports the following software versions:
 
 * Windows 10
 * Windows 8.1
 
-API Gateway supports the following hardware:
+Developer tools supports the following hardware:
 
 * 32-bit Windows on both 32-bit hardware and 64-bit hardware
 * Intel Core or AMD Opteron at 2Ghz with Dual Core or faster
