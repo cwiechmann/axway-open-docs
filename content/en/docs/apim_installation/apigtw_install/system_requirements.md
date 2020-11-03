@@ -236,7 +236,7 @@ This section lists additional prerequisites for installing API Gateway.
 
 On Linux, you must ensure that the installation executable has the appropriate permissions in your environment. For example, you can use the `chmod` command to update the file permissions.
 
-### `/tmp` directory mounted with noexec
+### /tmp directory mounted with noexec
 
 If your Linux system has the `/tmp` directory mounted with `noexec`, you must complete some additional steps before installing or running API Gateway.
 
