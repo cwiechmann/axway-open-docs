@@ -135,13 +135,18 @@ The inputs to the IAM Setup CloudFormation Template (`amplify-agents-deploy-all.
 | ECSClusterName                | The name of the ECS Fargate Cluster for the ECS tasks to be deployed to                                                                   |                                 | continuous |
 | ECSCentralOrganizationID      | The AMPLIFY Central Organization ID to add to the ECS tasks                                                                               |                                 | continuous |
 | ECSCentralEnvironmentName     | The AMPLIFY Central Environment that the agents will be associated with                                                                   |                                 | continuous |
+| ECSCentralDiscoveryAgentName    | The Amplify Discovery Agent name                                                                                                        |                                 | continuous |
+| ECSCentralTraceabilityAgentName | The Amplify Traceability Agent name                                                                                                     |                                 | continuous |
+| ECSCentralURL                   | The Amplify Central URL to connect to, required for EU region                                                                           |                                 | continuous |
+| ECSCentralDeployment            | The Amplify Central Deployment, required for EU region                                                                                  |                                 | continuous |
+| ECSCentralTraceabilityHost      | The Amplify Central Traceability host, required for EU region                                                                           |                                 | continuous |
 | ECSCentralClientID            | The AMPLIFY Central Client ID (DOSA_xxxxxxx) that the agents will use to communicate to AMPLIFY                                           |                                 | continuous |
 | DiscoveryAgentLogGroupName    | The name that the Discovery Agent running on EC2 will log to                                                                              | amplify-discovery-agent-logs    | continuous |
 | TraceabilityAgentLogGroupName | The name that the Traceability Agent running on EC2 will log to                                                                           | amplify-traceability-agent-logs | continuous |
 | SSMPrivateKeyParameter        | The key name in SSM Parameter Store holding the AMPLIFY Private Key                                                                       | AmplifyPrivateKey               | continuous |
 | SSMPublicKeyParameter         | The key name in SSM Parameter Store holding the AMPLIFY Public Key                                                                        | AmplifyPublicKey                | continuous |
-| SecurityGroup                 | The Security Group ID to associate with the ECS task or EC2 instance, if not deploying complete infrastructure                             |                                 | continuous |
-| Subnet                        | The Subnet to associate with the ECS task or EC2 instance, if not deploying complete infrastructure                                        |                                 | continuous |
+| SecurityGroup                 | The Security Group ID to associate with the ECS task or EC2 instance, if not deploying complete infrastructure                            |                                 | continuous |
+| Subnet                        | The Subnet to associate with the ECS task or EC2 instance, if not deploying complete infrastructure                                       |                                 | continuous |
 
 #### Resources (IAM and Resources)
 
@@ -370,19 +375,19 @@ An Access and Secret Key for the user should be created and given to the person 
 
 The inputs to the Resource CloudFormation template (`amplify-agents-resources.yaml`):
 
-| Parameter Name             | Description                                                                                                                                   | Default Value           | Operating Mode |
-| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | -------------- |
+| Parameter Name             | Description                                                                                                                                  | Default Value           | Operating Mode |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | -------------- |
 | SetupConfigService         | This parameter is used to disable the configuration of AWS Config Service, and all of its dependencies, while building the stack             | true                    | continuous     |
 | ConfigBucketName           | The name of the bucket the Config Service, if enabled, will store AWS Config Logs. The account number and region will be appended to this    | apigw-config-discovery  | continuous     |
 | ConfigBucketExists         | If set to true, the Config Bucket will not be created                                                                                        | false                   | continuous     |
 | ConfigServiceRoleArn       | The ARN for the Config Service IAM Role                                                                                                      |                         | continuous     |
-| DiscoveryQueueName         | The name of the queue that will hold only changes made to API Gateway resources. The region will be appended to this                         | aws-apigw-discovery     | continuous     |
+| DiscoveryQueueName         | The name of the queue that will hold only changes made to API Gateway resources                                                              | aws-apigw-discovery     | continuous     |
 | TraceabilityAPIGWCWRoleArn | The ARN for the IAM role that allows API Gateway the permission to write CloudWatch logs. Leave blank if this does not need to be configured |                         | both           |
 | TraceabilityLambdaRoleArn  | The Log Group created to track access of APIC tracked API Gateway endpoints                                                                  |                         | both           |
 | TraceabilityLogGroupName   | The CloudWatch Log Group that will store transaction details for AWS API Gateway usage events                                                | APIGW_Traceability_Logs | both           |
 | TraceabilityFunctionBucket | The S3 Bucket that has the executable for the Traceability Lambda function                                                                   |                         | both           |
 | TraceabilityFunctionKey    | The key of the Traceability Lambda function in the bucket                                                                                    |                         | both           |
-| TraceabilityQueueName      | The name of the queue that will hold traceability logs of API Gateway resources. The region will be appended to this                         | aws-apigw-traceability  | both           |
+| TraceabilityQueueName      | The name of the queue that will hold traceability logs of API Gateway resources                                                              | aws-apigw-traceability  | both           |
 
 #### Resources (Resources only)
 

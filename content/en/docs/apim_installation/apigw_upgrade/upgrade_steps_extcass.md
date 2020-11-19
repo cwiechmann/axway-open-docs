@@ -100,7 +100,7 @@ Perform the following in your new API Gateway 7.7 installation.
 
 #### Task 1 - Apply the latest update
 
-Apply the latest available update for your new installation. To see the system property changes made between the old installation and the latest update, see [system property changes](/docs/apim_installation/apigw_upgrade/upgrade_system_props/). Updates are available from [Axway Support](https://support.axway.com/).
+Apply the latest available update for your new installation. To see the system property changes made between the old installation and the latest update, see [System property changes](/docs/apim_reference/system_props/). Updates are available from [Axway Support](https://support.axway.com/).
 
 {{< alert title="Tip" color="primary" >}}Ensure that your new 7.7 installation is on the latest update to reduce any possible issues.{{< /alert >}}
 
@@ -140,7 +140,7 @@ In this example, API Gateway has a single-node topology that includes one Admin 
 
 The sample topology is as follows:
 
-![Single-node topology](/Images/UpgradeGuide/APIgw_single%20node%20upgrade%20topology.png)
+![Single-node topology](/Images/UpgradeGuide/APIgw_single_node_upgrade_topology.png)
 
 ### Before you upgrade - Check the old installation
 
@@ -220,7 +220,7 @@ In this example, API Gateway has a three-node topology that includes two Admin N
 
 The sample topology is as follows:
 
-![Example multi-node topology](/Images/UpgradeGuide/APIgw_upgrade%20topology.png)
+![Example multi-node topology](/Images/UpgradeGuide/APIgw_upgrade_topology.png)
 
 * API Gateway NodeA: This node runs an Admin Node Manager and a single API Gateway named `APIGateway1` in a group named `GatewayGroup`.
 * API Gateway NodeB: This node runs a Node Manager and a single API Gateway named `APIGateway2` in a group named `GatewayGroup`.
