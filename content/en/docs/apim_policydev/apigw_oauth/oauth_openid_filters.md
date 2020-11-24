@@ -76,5 +76,5 @@ Select one of the following options:
     Select this option and click **Signing Key** to select a private key certificate, and use it to verify the ID token.
 * **With Client Secret**:
     Select this option to verify the ID token using a client secret.
-    
+
 Please note, that additionally the `aud` claim of the OpenID connect token is verified, which must match to clientId of the used OAuth-Client-Application (`oauth.client.application.getClientId()`).
