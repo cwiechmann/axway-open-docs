@@ -77,4 +77,4 @@ Select one of the following options:
 * **With Client Secret**:
     Select this option to verify the ID token using a client secret.
 
-Please note, that additionally the `aud` claim of the OpenID connect token is verified, which must match to clientId of the used OAuth-Client-Application (`oauth.client.application.getClientId()`).
+Please note, that at execution time of this filter the `aud` claim of the given OpenID connect token is additionally verified, which must match to clientId of the used [OAuth-Client-Application](/docs/apim_policydev/apigw_oauth/gw_oauth_client) (`oauth.client.application.getClientId()`).
