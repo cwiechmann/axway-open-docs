@@ -1,8 +1,8 @@
 ---
-title: Deploy agents - advanced functionality
-linkTitle: Deploy your agents - advanced functionality
+title: Reference - Agent configuration
+linkTitle: Reference - Agent configuration
 draft: false
-weight: 30
+weight: 50
 description: >-
   Learn how to deploy your Discovery Agent and Traceability Agent using Docker
   containers so that you can manage  your AWS API Gateway environment within
@@ -72,7 +72,8 @@ The configuration of the AWS_QUEUENAME is not used in this mode.
 | CENTRAL_ORGANIZATIONID                                             | The Organization ID from AMPLIFY Central. Locate this at Platform > User > Organization.                                                                                                                                                                                                                              |
 | CENTRAL_TEAM                                                       | The name of the team in AMPLIFY Central that all APIs will be linked to. Locate this at AMPLIFY Central > Access > Team Assets.                                                                                                                                                                                       |
 | CENTRAL_MODE                                                       | Method to send endpoints back to Central. (`publishToEnvironment` = API Service, `publishToEnvironmentAndCatalog` = API Service and Catalog asset).                                                                                                                                                                   |
-| CENTRAL_AUTH_URL                                                   | The AMPLIFY login URL: <https://login.axway.com/auth>                                                                                                                                                                                                                                                                 |
+| CENTRAL_APPENDDATAPLANETOTITLE                                     | Set to false to skip adding the AWS Gateway and stage to the API description.                                                                                                                                                               |
+| CENTRAL_AUTH_URL                                                   | The AMPLIFY login URL: <https://login.axway.com/auth>.                                                                                                                                                                                                                                                                 |
 | CENTRAL_AUTH_REALM                                                 | The Realm used to authenticate for AMPLIFY Central.                                                                                                                                                                                                                                                                   |
 | CENTRAL_AUTH_CLIENTID                                              | The name of the Service Account created in AMPLIFY Central. Locate this at AMPLIFY Central > Access > Service Accounts.                                                                                                                                                                                               |
 | CENTRAL_AUTH_PRIVATEKEY                                            | The private key associated with the Service Account.                                                                                                                                                                                                                                                                  |

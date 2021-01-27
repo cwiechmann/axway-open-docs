@@ -2,7 +2,7 @@
 title: Administer API Manager Gateway
 linkTitle: Administer API Manager Gateway
 draft: false
-weight: 120
+weight: 25
 description: Learn how to deploy your Discovery Agent and Traceability Agent so
   that you can manage your Axway API Gateway environment within AMPLIFY Central.
 ---
@@ -154,7 +154,7 @@ This section connects the agent to AMPLIFY Central and determines how to publish
 
 `environment`: The environment name you created when [preparing AMPLIFY Central](/docs/central/connect-api-manager/prepare-amplify-central/).
 
-`apiServerVersion`: The version of AMPLIFY Central API the agent is using. Default value is **v1alpha1**
+`apiServerVersion`: The version of AMPLIFY Central API the agent is using. Default value is **v1alpha1**.
 
 `mode`: The method to send endpoints back to Central. (publishToEnvironment = API Service, publishToEnvironmentAndCatalog = API Service and Catalog asset).  
 
@@ -212,25 +212,25 @@ The SMTP Notification section defines how the agent manages email settings for s
 
 `authtype`: The authentication type based on the email server.  You may have to refer to the email server properties and specifications. This value defaults to NONE.
 
-`subscribe.subject`: Subject of the email notification for action subscribe. Default is **Subscription Notification**.
+`subscribe.subject`: Subject of the email notification for action subscribe. Default is `Subscription Notification`.
 
-`subscribe.body`: Body of the email notification for action subscribe. Default is **Subscription created for Catalog Item:  {catalogItem} {authtemplate}**.
+`subscribe.body`: Body of the email notification for action subscribe. Default is `Subscription created for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a><br/>${authtemplate}<br/>`.
 
-`subscribe.oauth:` Body of the email notification for action subscribe on OAuth authorization is **Your API is secured using OAuth token. You can obtain your token using grant_type=client_credentials with the following client_id={clientID} and client_secret={clientSecret}**.
+`subscribe.oauth:` Body of the email notification for action subscribe on OAuth authorization is `Your API is secured using OAuth token. You can obtain your token using grant_type=client_credentials with the following client_id=<b>${clientID}</b> and client_secret=<b>${clientSecret}</b>`.
 
-`subscribe.apikeys`: Body of the email notification for action subscribe on APIKey authorization is **Your API is secured using an APIKey credential:header:{keyHeaderName}/value:{key}**.
+`subscribe.apikeys`: Body of the email notification for action subscribe on APIKey authorization is `Your API is secured using an APIKey credential: header: <b>${keyHeaderName}</b> / value: <b>${key}</b>`.
 
-`unsubscribe.subject`: Subject of the email notification for action unsubscribe. Default is **Subscription Removal Notification**.
+`unsubscribe.subject`: Subject of the email notification for action unsubscribe. Default is `Subscription Removal Notification`.
 
-`unsubscribe.body`: Body of the email notification for action unsubscribe. Default is **Subscription for Catalog Item: {catalogItem} has been unsubscribed**.
+`unsubscribe.body`: Body of the email notification for action unsubscribe. Default is `Subscription for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a> has been unsubscribed`.
 
-`subscribeFailed.subject`: Subject of the email notification for action subscribe failed. Default is **Subscription Failed Notification**.
+`subscribeFailed.subject`: Subject of the email notification for action subscribe failed. Default is `Subscription Failed Notification`.
 
-`subscribeFailed.body`: Body of the email notification for action subscribe failed. Default is **Could not subscribe to CatalogItem: {catalogItem}**.
+`subscribeFailed.body`: Body of the email notification for action subscribe failed. Default is `Could not subscribe to CatalogItem: <a href= ${catalogItemUrl}> ${catalogItemName}</a>`.
 
-`unsubscribeFailed.subject`: Subject of the email notification for action unsubscribe failed. Default is **Subscription Removal Failed Notification**.
+`unsubscribeFailed.subject`: Subject of the email notification for action unsubscribe failed. Default is `Subscription Removal Failed Notification`.
 
-`unsubscribeFailed.body` : Body of the email notification for action unsubscribe failed. Default is **Could not unsubscribe to Catalog Item: {catalogItemURL} {catalogItemName}**.
+`unsubscribeFailed.body` : Body of the email notification for action unsubscribe failed. Default is `Could not unsubscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a>`.
 
 #### Customizing email servers
 
@@ -303,25 +303,33 @@ subscriptions:
       fromAddress: fromAddress@outlook.com
       username: outlookuser
       password:
+```
+
+If you want to customize your SMTP email notifications to be something different than the defaults, you can add to the configuration file as follows:
+
+```yaml
+subscriptions:
+  notifications:
+    smtp:
       subscribe:
         subject: Subscription Notification
         body: |
-          Subscription created for Catalog Item:  <a href= ${catalogItemUrl}> ${catalogItemName} </a> <br/>
+          Subscription created for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a><br/>${authtemplate}<br/>
           ${authtemplate}<br/>
         oauth: Your API is secured using OAuth token. You can obtain your token using grant_type=client_credentials with the following client_id=<b>${clientID}</b> and client_secret=<b>${clientSecret}</b>
-        apikeys: Your API is secured using an APIKey credential:header:<b>${keyHeaderName}</b>/value:<b>${key}</b>
+        apikeys: Your API is secured using an APIKey credential: header: <b>${keyHeaderName}</b> / value: <b>${key}</b>
       unsubscribe:
         subject: Subscription Removal Notification
         body: |
-          Subscription for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName} </a> has been unsubscribed
+          Subscription for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a> has been unsubscribed
       subscribeFailed:
-        subject: Subscription Failed Notification
+        subject: Custom Subscription Failed Notification
         body: |
-          Could not subscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName} </a> Error: ${message}
+          Could not subscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a> Error: ${message}
       unsubscribeFailed:
-        subject: Subscription Removal Failed Notification
+        subject: Custom Subscription Removal Failed Notification
         body: |
-          Could not unsubscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName} </a>
+          Could not unsubscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a>
 ```
 
 #### Customizing log section (log)
@@ -334,7 +342,7 @@ The log section defines how the agent is managing its logs.
 
 `output`: The output for the log lines (stdout, file, both). Default value is **stdout**.
 
-`maskedValues` : Comma-separated list of keywords to identify within the agent config, which is used to mask its corresponding sensitive data. Keywords are matched by whole words and are case-sensitive. Displaying of agent config to the console requires that the log.level be at debug (level: debug)
+`maskedValues` : Comma-separated list of keywords to identify within the agent config, which is used to mask its corresponding sensitive data. Keywords are matched by whole words and are case-sensitive. Displaying of agent config to the console requires that the log.level be at debug (level: debug).
 
 Once all data is gathered, this section should look like:
 
@@ -346,7 +354,7 @@ log:
   maskedValues: keyword1, keyword2, keyword3
 ```
 
-See [Set up agent configuration](/docs/central/connect-api-manager/agent-variables/) for more options
+See [Set up agent configuration](/docs/central/connect-api-manager/agent-variables/) for more options.
 
 #### Validating your custom Discovery Agent configuration file
 
@@ -397,22 +405,22 @@ subscriptions:
       subscribe:
         subject: Subscription Notification
         body: |
-            Subscription created for Catalog Item:  <a href= ${catalogItemUrl}> ${catalogItemName} </a> <br/>
+          Subscription created for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a><br/>${authtemplate}<br/>
           ${authtemplate}<br/>
         oauth: Your API is secured using OAuth token. You can obtain your token using grant_type=client_credentials with the following client_id=<b>${clientID}</b> and client_secret=<b>${clientSecret}</b>
-        apikeys: Your API is secured using an APIKey credential:header:<b>${keyHeaderName}</b>/value:<b>${key}</b>
+        apikeys: Your API is secured using an APIKey credential: header: <b>${keyHeaderName}</b> / value: <b>${key}</b>
       unsubscribe:
         subject: Subscription Removal Notification
         body: |
-          Subscription for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName} </a> has been unsubscribed
+          Subscription for Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a> has been unsubscribed
       subscribeFailed:
-        subject: Subscription Failed Notification
+        subject: Custom Subscription Failed Notification
         body: |
-          Could not subscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName} </a> Error: ${message}
+          Could not subscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a> Error: ${message}
       unsubscribeFailed:
-        subject: Subscription Removal Failed Notification
+        subject: Custom Subscription Removal Failed Notification
         body: |
-          Could not unsubscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName} </a>
+          Could not unsubscribe to Catalog Item: <a href= ${catalogItemUrl}> ${catalogItemName}</a>
 
 log:
   level: info
@@ -875,6 +883,27 @@ output.traceability:
       - "ECDHE-RSA-AES-256-GCM-SHA384"
    pipelining: 0
 #   proxy_url: socks5://username:password@hostname:port
+```
+
+#### Customizing beat queuing section (queue)
+
+The queue section defines the internal Filebeat queue to store events before publishing them. The queue is responsible for buffering and combining events into batches that can be consumed by the outputs. The outputs use bulk operations to send a batch of events in one transaction.
+
+`QUEUE_MEM_EVENTS`: Number of events the queue can store (2048 by default).
+
+`QUEUE_MEM_FLUSH_MINEVENTS`: Minimum number of events required for publishing. If this value is set to 0, the output starts publishing events without additional waiting times. Otherwise, the output must wait for more events to become available (100 by default).
+
+`QUEUE_MEM_FLUSH_TIMEOUT`: Maximum wait time for `QUEUE_MEM_FLUSH_MINEVENTS` to be fulfilled (1 second by default). If set to 0s, events are immediately available for consumption.
+
+Once all data is gathered, this section should look like:
+
+```yaml
+queue:
+  mem:
+    events: ${QUEUE_MEM_EVENTS:2048}
+    flush:
+      min_events: ${QUEUE_MEM_FLUSH_MINEVENTS:100}
+      timeout: ${QUEUE_MEM_FLUSH_TIMEOUT:1s}
 ```
 
 #### Customizing log section (logging)
