@@ -39,7 +39,7 @@ To solve this issue, set the correct return type for any APIs causing the error,
 
 ## Random session logout
 
-If you have the problem that the API-Portal keeps logging users out rather randomly, then it could be due to the session hijacking plugin running in the API-Portal. 
+If you have the problem that the API-Portal keeps logging users out rather randomly, then it could be due to the session hijacking plugin running in the API-Portal.
 It checks, for example, the `x-forwarded-for` HTTP header, which is typically set by an upstream reverse proxy, to see if it remains the same during a session. The port number also plays a role.  
 An example would be:  
 `89.211.212.232:50238`  
