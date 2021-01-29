@@ -43,4 +43,4 @@ If API Portal is randomly terminating users sessions, the session Hijacking plug
 
 This plugin checks, for example, the `x-forwarded-for` HTTP header, which is typically set by an upstream reverse proxy, to check whether the header remains the same during a session. If the header changes, the user is logged out. To solve this issue, check if a reverse proxy is in use, and if and how it sets the `X-Forwarded-For` header.  
 
-Another example, if the `X-Forwarded-For` changes a port from `89.211.212.232:50238` to `89.211.212.232:50239`, the user is logged out. In this case, you can reconfigure your reverse proxy so that the `X-Forwarded-For` header is not sent without the port number, or not sent at all.
+For example, if the `X-Forwarded-For` changes a port from `89.211.212.232:50238` to `89.211.212.232:50239`, the user is logged out. In this case, you can reconfigure your reverse proxy so that the `X-Forwarded-For` header is not sent without the port number, or not sent at all.
