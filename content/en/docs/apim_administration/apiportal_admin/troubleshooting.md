@@ -39,13 +39,8 @@ To solve this issue, set the correct return type for any APIs causing the error,
 
 ## Random session logout
 
-If API Portal is randomly terminating users sessions, the session Hijacking plugin running in the API Portal might be the cause of this issue.  
+If API Portal is randomly terminating users sessions, the session Hijacking plugin running in the API Portal might be the cause of the issue.  
 
-This plugin checks, for example, the `x-forwarded-for` HTTP header, which is typically set by an upstream reverse proxy, to check whether the header remains the same during a session. If the header changes, the user is logged out.  
+This plugin checks, for example, the `x-forwarded-for` HTTP header, which is typically set by an upstream reverse proxy, to check whether the header remains the same during a session. If the header changes, the user is logged out. To solve this issue, check if a reverse proxy is in use, and if and how it sets the `X-Forwarded-For` header.  
 
-To solve this issue, check if a reverse proxy is in use, and if and how it sets the `X-Forwarded-For` header.  
-If for example the `X-Forwarded-For` changes like in the following example:  
-`89.211.212.232:50238`  
-changes to a different port:  
-`89.211.212.232:50239`  
-The user is logged out. In this case, you can reconfigure your reverse proxy so that the `X-Forwarded-For` header is not sent at all or without the port number.
+Another example, if the `X-Forwarded-For` changes a port from `89.211.212.232:50238` to `89.211.212.232:50239`, the user is logged out. In this case, you can reconfigure your reverse proxy so that the `X-Forwarded-For` header is not sent without the port number, or not sent at all.
