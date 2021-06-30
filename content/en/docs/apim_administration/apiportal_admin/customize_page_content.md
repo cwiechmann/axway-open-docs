@@ -6,7 +6,6 @@ date: 2019-07-30T00:00:00.000Z
 description: Customize other features of your API Portal, such as sign up,
   login, and application settings.
 ---
-
 ## Add reCaptcha to sign up
 
 You can customize your sign up functionality by enabling reCaptcha
@@ -55,13 +54,23 @@ You can customize what API Portal page your API consumers see on first log in, 
 
 You can change the API Portal page users see when they first log in successfully to API Portal. The default behavior is:
 
-* Display the Applications page if at least one application exists
-* Display the API Catalog page if no applications exist
+* Display the Applications page if at least one application exists.
+* Display the API Catalog page if no applications exist.
 
 To change this, follow these steps:
 
 1. In JAI, click **Components > API Portal > Additional Settings**.
 2. In the **Redirect after login** field, enter a menu link (for example, `/index.php?option=com_apiportal&view=home`) or a menu alias (for example, `/home`) to redirect the user to after successful login.
+3. Click **Save**.
+
+### Change the page displayed after unauthorized request
+
+You can change the API Portal page that the users are redirected to after unauthorized request. By default they are redirected to the sign-in page.
+
+To change this, follow these steps:
+
+1. In JAI, click **Components > API Portal > Additional Settings**.
+2. In the **Redirect on unauthorized request** field, enter a menu link (for example, `/index.php?option=com_apiportal&view=home`) or a menu alias (for example, `/home`).
 3. Click **Save**.
 
 ### Enable ReCaptcha and user account locking
@@ -209,3 +218,29 @@ User sessions that remain active for extended periods of time are exposed to att
 2. Click **Save**.
 
 Since the session is destroyed after the specified period of time, the potential footprint of the session is eliminated, which helps to minimize attacks.
+
+## Chat support
+
+You can configure your API Portal to show an Intercom chat support. After you enable this module, by default, all users will be able to see the Chat, even users not logged to the portal.
+
+To start using Intercom Chat:
+
+1. In JAI, click **Extensions > Modules > Intercom**.
+2. Enter your `Application Id` taken from Intercom.
+3. To enable the chat only for logged users, select `No` from `Show chat for non-logged in users`.
+
+After you configure this module, the Intercom chat icon is displayed on all pages of your API Portal.
+
+## Show notifications for applications that are waiting for approval
+
+When the auto-approve setting is disabled, users can't use their newly-created applications until they are approved by an Organization administrator (Org admin).
+
+To remind the Org admin that there are applications waiting for approval, API Portal displays a notification with a link to the list of pending approval applications every time that the Org admin logs in to API Portal.
+
+To disable this notification:
+
+1. In JAI, click **Components > API Portal > Additional settings**.
+2. Choose **No** for the **Show notifications for applications that are pending approval** field.
+3. Click **Save**.
+
+{{< alert title="Note" color="primary" >}}The notification is not shown when **Delegate application management** option in API Manager settings is disabled because in that case, Org admins cannot manage applications or approve application requests.{{< /alert >}}

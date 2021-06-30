@@ -28,59 +28,25 @@ User interface strings are stored in language-specific resource files. To add th
 
 API Portal UI strings are not included in the installed language resource files, so you must add the required strings for the new language.
 
-The UI strings are stored in initialization (`.ini`) files. Each language has its own `.ini` file that control the UI text shown in API Portal. By default, the API Portal UI strings are included only in the English `.ini` file (`en-GB.com_apiportal.ini`). To change the language shown in API Portal, you must have a translation of the English `.ini` file for that language.
+The UI strings are stored in initialization (`.ini`) files. Each language has its own `.ini` file that control the UI text shown in API Portal. By default, the API Portal UI strings are included only in the English (`en-GB.com_apiportal.ini` file). To change the language shown in API Portal, you must have a translation of the English `.ini` file for that language.
 
-Because the `.ini` files are text files, you can use professional translation services to get the file translated. Alternatively, you can manually translate the UI strings yourself.
+### Add a translated UI string file
 
-#### Add a translated UI string file
+All **File upload** sections have a link from which you can download the English version of the file. After that, you just need to translate the strings and upload the new file. You must ensure that the extension of the file is `.ini`, otherwise the upload will fail.
 
-You can send the file `en-GB.com_apiportal.ini` file for translation to a professional translation service, and include the translated file in your API Portal installation.
+To upload language files:
 
-To find the `en-GB.com_apiportal.ini` file that must be translated, go to the following directory in your API Portal installation:
+1. In JAI, click **Components > API Portal > Additional Settings**.
+2. Enable **Upload language file toggle**. The following options are shown:
 
-```
-/opt/axway/apiportal/htdoc/language/en-GB/
-```
+   * **Language**: Select the language for which you are uploading translations. All installed languages except English are listed.
+   * **Language files context**: Select whether the uploaded language files are for the **Site** or **Administrator** part of API Portal.
+   * **API Portal component language file**: The main language file for API Portal component.
+   * **Overridden language file**: Some texts in API Portal, such as the messages on the login pages, are stored in different filed and you must change and upload them separately.
+   * **`sys.ini` language file**: This options is shown only when **Administrator** is selected as a language files context. This language file contains translations for the administrator components menu drop-down, menu, and component parameters.
+3. Click **Save & Close**.
 
-Before you send the file for translation, it is recommended to rename the file to `en-GB.com_apiportal.ini.txt`. When you receive the translated file, you should remove any `.txt` extension again before proceeding with the following steps.
-
-To install the translated file:
-
-1. Go to the resource file directory of the language you installed (for example, `/opt/axway/apiportal/htdoc/language/fr-FR/`).
-2. Copy the translated `.ini` file to the directory.
-3. Ensure that the language code in the file name of the translated `.ini` file matches the language code of the installed language, and the extension of the file is `.ini` (for example, `fr-FR.com_apiportal.ini`). Rename the file, if needed.
-4. Go to your API Portal, refresh the page, and verify that the UI texts have changed to your new language.
-
-#### Manually translate the UI strings
-
-1. Copy the following file from the English resource file directory:
-
-   ```
-   /opt/axway/apiportal/htdoc/language/en-GB/en-GB.com_apiportal.ini
-   ```
-2. Go to resource file directory of the language you installed (for example, `/opt/axway/apiportal/htdoc/language/fr-FR/`), and paste the copied file there.
-3. Rename the copied `.ini` file to match the language code of the installed language (for example, `fr-FR.com_apiportal.ini`).
-4. Open both the English `.ini` file and the copied `.ini` file.
-5. In the English `.ini` file, find a UI text you want to change (such as the text `Connect with a community of developers` at the bottom of the API Portal sign in page), and copy the UI string ID (`COM_APIPORTAL_HOME_CONNECT`).
-6. In the copied `.ini` file, find the same UI string, and change the value of the string to the new language translation.
-7. Repeat the last two steps for all the UI strings on all your API Portal pages that you want to change to the new language, and save the file.
-8. Go to your API Portal, refresh the page, and verify that the UI texts have changed to your new language.
-
-### Change the text overrides on the sign in page
-
-Some texts on the sign in page are controlled by text overrides, and you have to change them separately in the `.override` file.
-
-1. Go to the language override directory:
-
-   ```
-   /opt/axway/apiportal/htdoc/language/overrides/
-   ```
-2. Copy the file `en-GB.override`.
-3. Paste the file in the same directory, and rename it to match your new language (for example, `fr-FR.override`).
-4. Open the renamed file, find the UI string with the value `Login Name`, and change the value of the string to the new language translation (for example, `Identifiant`).
-5. Find the UI string with the value `Password`, and change the value of the string to translate it (for example, `Mot de passe`).
-6. Save the file, and go to your API Portal.
-7. Go to the API Portal sign in page, refresh the page, and verify that the UI texts have changed to your new language.
+To translate labels or values of custom properties, you must add a new row to the translation `.ini` file, with the desired `key/value` pair, and ensure that the value of the key is in capital letters. For example, to translate a custom property with label "Environment" to French, add the following line to the translation file: `ENVIRONMENT="Environnement"`.
 
 ## Provide API Portal in multiple languages
 
@@ -97,7 +63,7 @@ To add a new content language and main menu, follow these steps:
 1. In the JAI left navigation bar, click **Language(s) > Content Languages**.
 2. Click **New** to add a new content language.
 
-   {{< alert title="Note" color="primary" >}}If you have already installed a new language, a corresponding content language will already exist for that language and you can skip the following steps 3 to 7, and continue from step 8.{{< /alert >}}
+   {{< alert title="Note" color="primary" >}}If you have already installed a new language, a corresponding content language will already exist for that language and you can skip steps 3 to 7, and continue from step 8.{{< /alert >}}
 3. On the **Details** tab, enter the **Title** and **Title Native** for the new language. The titles can be the same.
 4. Enter the Joomla! **Language Tag**. Ensure that you enter the tag in the correct format. You must use "`-`" instead of "`_`" (for example, `fr-FR`).
 5. In **URL Language Code**, enter the language identifier to use in the language-specific URL (for example, `fr`). The identifier must be unique for each language.
@@ -134,7 +100,7 @@ You must also duplicate your page template styles for each language. By default,
 5. Select the respective language as the **Default**. This sets this template as the default for pages using the selected language.
 6. Click the **Navigation** tab and change the **Menu** to the correct main menu for the language.
 7. Click the **Assignment** tab and assign the menu items from the correct language to the template. To select or deselect all menu items, click the toggle button next to the main menu title.
-8. Click **Save** and click **Close** to close the template style.
+8. Click **Save & Close**.
 
 ### Duplicate the homepage template style
 
@@ -146,7 +112,7 @@ You must also duplicate your homepage template style for each language.
 4. Edit the **Style Name** to update the name of your new homepage.
 5. Click the **Navigation** tab and change the **Menu** to the correct main menu for the language.
 6. Click the **Assignment** tab and select only **Home** from the **Main menu** of the correct language.
-7. Click **Save** and click **Close** to close the template style.
+7. Click **Save & Close**.
 
 ### Create homepage modules for the new language
 
@@ -158,7 +124,7 @@ On the Home page layout there are available positions where you can add modules.
 4. For the **Language**, select the new installed language.
 5. On the **Menu assignment** tab, select **Only on the pages selected** from the **Module assignment** list.
 6. Select the Home page of the new language from the **Menu selection** field.
-7. Click **Save**  
+7. Click **Save & Close**.
 
 ### Publish additional languages
 
@@ -263,7 +229,7 @@ By default, API Portal uses the Purity III template style. After following this
 5. Select the respective language as the **Default**. This sets this template as the default for pages using the selected language.
 6. Click the **Navigation** tab, and change the **Menu** to the correct main menu for the language.
 7. Click the **Assignment** tab, and assign the menu items from the correct language to the template. To select or deselect all menu items, click the toggle button next to the main menu title.
-8. Click **Save** and click **Close** to close the template style.
+8. Click **Save & Close**.
 
 #### Duplicate the template style for all languages
 
@@ -278,7 +244,7 @@ Finally, edit the original template style for the English language:
 3. Select English as the **Default**. This sets this template as the default for pages using the English language.
 4. Click the **Navigation** tab, and change the **Menu** to `Main menu - EN`.
 5. Click the **Assignment** tab, and assign the menu items from the English language to the template. To select or deselect all menu items, click the toggle button next to the main menu title.
-6. Click **Save** and click **Close** to close the template style.
+6. Click **Save & Close**.
 
 ### Enable the language switcher
 

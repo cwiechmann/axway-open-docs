@@ -1,14 +1,14 @@
 {
 "title": "Configure encryption passphrase",
-"linkTitle": "Configure encryption passphrase",
-"weight":"55",
-"date": "2019-10-14",
-"description": "Encrypt API Gateway configuration data using an encryption passphrase."
+  "linkTitle": "Configure encryption passphrase",
+  "weight": "55",
+  "date": "2019-10-14",
+  "description": "Encrypt API Gateway configuration data using an encryption passphrase."
 }
 
 By default, the API Gateway configuration data is stored unencrypted. However, you can encrypt sensitive information such as passwords and private keys using an encryption passphrase. When the passphrase has been set (and the data has been encrypted with it), you must then enter the passphrase when connecting to API Gateway with Policy Studio, or when API Gateway is starting up, so that the encrypted data can be decrypted. You can enter an encryption passphrase at the level of a local Policy Studio project on the local file system, and at the level of a running API Gateway group instance.
 
-All sensitive information in the API Gateway configuration data is encrypted when you set an encryption passphrase. For example, this sensitive information includes passwords that API Gateway requires for connecting to external systems (databases, LDAP, and so on), or private keys that are not stored on a Hardware Security Module (HSM). All sensitive information is encrypted using the Password-Based Encryption (PBE) system specified by the Public-Key Cryptography Standard (PKCS#12).
+All sensitive information in the API Gateway configuration data is encrypted when you set an encryption passphrase. For example, this sensitive information includes passwords that API Gateway requires for connecting to external systems (databases, LDAP, and so on), or private keys that are not stored on a Hardware Security Module (HSM). Encryption of sensitive information is done via Password-Based Encryption (PBE) using the PBKDF2 standard. For more information, see [API Gateway password management features](/docs/apimgmt_security/c_secgd_features_intro/#api-gateway-password-management-features).
 
 This section describes how to specify an encryption passphrase for a local Policy Studio project or when connecting to an API Gateway in Policy Studio, in an API Gateway configuration file, or when API Gateway is starting up. It also describes how to change the passphrase when it has been set initially.
 
@@ -118,6 +118,12 @@ Alternatively, you can use a script to automatically provide the passphrase when
     The following files should also be protected:
     * `../system/conf/nodemanager.xml`
     * `../skel/service.xml`
+
+{{< alert title="Caution" color="warning" >}}
+
+1. If the group passphrase is not correctly set in the `group.xml` file, then newly created API Gateway servers will fail to start.
+2. If newly created API Gateway servers expect to use a script to provide the passphrase and the group passphrase cannot be correctly set in the `group.xml` file, then you must set the `pvalue` attribute to `"(prompt)"`, as described in [Prompt for the passphrase at server startup](/docs/apim_administration/apigtw_admin/general_passphrase/#prompt-for-the-passphrase-at-server-startup). In this scenario, you must provide the correct passphrase for the group when new API Gateway servers are created. Failing to provide the correct passphrase causes the newly created API Gateway servers fail to start.
+{{< /alert >}}
 
 ## Promotion between environments
 

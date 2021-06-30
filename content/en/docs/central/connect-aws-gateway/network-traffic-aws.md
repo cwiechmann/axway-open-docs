@@ -3,7 +3,7 @@ title: Administer AWS Gateway network traffic
 linkTitle: Administer AWS Gateway network traffic
 draft: false
 weight: 30
-description: Traffic is always initiated by the Agent to AWS and AMPLIFY
+description: Traffic is always initiated by the Agent to AWS and Amplify
   Central. No sessions are ever initiated back to the Agent.
 ---
 
@@ -12,11 +12,10 @@ description: Traffic is always initiated by the Agent to AWS and AMPLIFY
 The destination for:
 
 * Agent Authentication data is `login.axway.com`
-
 * AWS API Gateway data is  `apicentral.axway.com`
-
-* API Event data is `ingestion-lumberjack.datasearch.axway.com`
-, `ingestion.datasearch.axway.com`, `ingestion-lumberjack.visibility.eu-fr.axway.com` or `ingestion.visibility.eu-fr.axway.com`
+* API Event data is `ingestion-lumberjack.datasearch.axway.com`, `ingestion.datasearch.axway.com`, `ingestion-lumberjack.visibility.eu-fr.axway.com` or `ingestion.visibility.eu-fr.axway.com`
+* Subscription notification for getting platform user information is `platform.axway.com`
+* API usage statistics, the number of calls placed to, is `https://lighthouse.admin.axway.com`
 
 ## Communication ports
 
@@ -26,30 +25,59 @@ Open the following ports to benefit from all the Agent functionalities:
 
 **Outbound**:
 
-| Region | Host                                                                                    | Port               | Protocol     | Data                               |
-|--------|-----------------------------------------------------------------------------------------|--------------------|--------------|------------------------------------|
-| US/EU  | platform.axway.com                                                                      | 443                | HTTPS        | Platform user info                 |
-| US/EU  | login.axway.com                                                                         | 443                | HTTPS        | Authentication                     |
-| US     | apicentral.axway.com                                                                    | 443                | HTTPS        | API definitions, Subscription info |
-| EU     | central.eu-fr.axway.com                                                                 | 443                | HTTPS        | API definitions, Subscription info |
-| US     | ingestion-lumberjack.datasearch.axway.com or ingestion.datasearch.axway.com             | 453 or 443         | TCP or HTTPS | API event data                     |
-| EU     | ingestion-lumberjack.visibility.eu-fr.axway.com or ingestion.visibility.eu-fr.axway.com | 453 or 443         | TCP or HTTPS | API event data                     |
+| Region | Host                                                                                      | IP             | port       | Protocol     | data                               |
+|--------|-------------------------------------------------------------------------------------------|----------------|------------|--------------|------------------------------------|
+| EU/US  | platform.axway.com                                                                        | 34.211.114.227 | 443        | HTTPS        |                                    |
+|        |                                                                                           | 54.201.86.113  |            |              |                                    |
+|        |                                                                                           |                |            |              |                                    |
+| EU/US  | lighthouse.admin.axway.com                                                                |                | 443        | HTTPS        | API usage statics                  |
+|        |                                                                                           |                |            |              |                                    |
+|        |                                                                                           |                |            |              |                                    |
+| EU/US  | login.axway.com                                                                           | 52.58.132.2    | 443        | HTTPS        |                                    |
+|        |                                                                                           | 52.29.4.35     |            |              |                                    |
+|        |                                                                                           | 54.93.140.145  |            |              |                                    |
+|        |                                                                                           |                |            |              |                                    |
+| US     | apicentral.axway.com                                                                      | 3.94.245.118   | 443        | HTTPS        | API definitions, Subscription info |
+|        |                                                                                           | 54.208.199.251 |            |              |                                    |
+|        |                                                                                           | 3.212.78.217   |            |              |                                    |
+|        |                                                                                           | 52.202.95.208  |            |              |                                    |
+|        |                                                                                           | 107.23.176.64  |            |              |                                    |
+|        |                                                                                           | 3.225.16.120   |            |              |                                    |
+|        |                                                                                           |                |            |              |                                    |
+| EU     | central.eu-fr.axway.com                                                                   | 52.47.84.198   | 443        | HTTPS        | API definitions, Subscription info |
+|        |                                                                                           | 13.36.25.69    |            |              |                                    |
+|        |                                                                                           | 35.181.21.87   |            |              |                                    |
+|        |                                                                                           | 13.36.2.143    |            |              |                                    |
+|        |                                                                                           | 13.36.52.216   |            |              |                                    |
+|        |                                                                                           | 15.236.7.112   |            |              |                                    |
+|        |                                                                                           |                |            |              |                                    |
+| US     | ingestion-lumberjack.datasearch.axway.com or ingestion.datasearch.axway.com               | 54.225.171.111 | 453 or 443 | TCP or HTTPS | API event data                     |
+|        |                                                                                           | 54.225.2.221   |            |              |                                    |
+|        |                                                                                           | 54.146.97.250  |            |              |                                    |
+|        |                                                                                           | 54.147.98.128  |            |              |                                    |
+|        |                                                                                           | 52.206.193.184 |            |              |                                    |
+|        |                                                                                           | 54.225.92.97   |            |              |                                    |
+|        |                                                                                           |                |            |              |                                    |
+| EU     | ingestion-lumberjack.visibility.eu-fr.axway.com  or  ingestion.visibility.eu-fr.axway.com | 15.236.125.123 | 453 or 443 | TCP or HTTPS | API event data                     |
+|        |                                                                                           | 35.180.77.202  |            |              |                                    |
+|        |                                                                                           | 13.36.27.97    |            |              |                                    |
+|        |                                                                                           | 13.36.33.229   |            |              |                                    |
 
-Note: _Region_ column is representing the region where your AMPLIFY organization is deployed. EU means deployed in European data center and US meaning deployed in US data center. Be sure to use the corresponding _Host_/_Port_ for your agents to operate correctly.
+Note: _Region_ column is representing the region where your Amplify organization is deployed. EU means deployed in European data center and US meaning deployed in US data center. Be sure to use the corresponding _Host_/_Port_ for your agents to operate correctly.
 
 **Inbound**:
 
 The docker container does not expose any ports outside of the container. Within the container the following listen:
 
-| Host                                       | Port               | Protocol  | Data                                |
-|--------------------------------------------|--------------------|-----------|-------------------------------------|
-| Docker Container                           | 8989 (default)     | HTTPS     |Serves the status of the agent and its dependencies for monitoring  |
+| Host             | Port           | Protocol | Data                                                               |
+|------------------|----------------|----------|--------------------------------------------------------------------|
+| Docker Container | 8989 (default) | HTTPS    | Serves the status of the agent and its dependencies for monitoring |
 
 ## Validation
 
 ### Direct Connection
 
-**Connecting to AMPLIFY Central and Login hosts:**
+**Connecting to Amplify Central and Login hosts:**
 
 ```shell
 curl -s -o /dev/null -w "%{http_code}"  https://apicentral.axway.com
@@ -61,7 +89,7 @@ curl -s -o /dev/null -w "%{http_code}"  https://login.axway.com
 
 A return of **"200"** validates the connection was established.
 
-**Connecting to AMPLIFY Central Event Traffic host, HTTPS:**
+**Connecting to Amplify Central Event Traffic host, HTTPS:**
 
 ```shell
 curl -s -o /dev/null -w "%{http_code}" https://ingestion.datasearch.axway.com
@@ -69,7 +97,7 @@ curl -s -o /dev/null -w "%{http_code}" https://ingestion.datasearch.axway.com
 
 A return of **"200"** validates the connection was established.
 
-**Connecting to AMPLIFY Central Event Traffic host, Lumberjack:**
+**Connecting to Amplify Central Event Traffic host, Lumberjack:**
 
 ```shell
 curl ingestion-lumberjack.datasearch.axway.com:453
@@ -79,7 +107,7 @@ A return of **"curl: (52) Empty reply from server"** validates the connection wa
 
 ### Connection via Proxy
 
-**Connecting to AMPLIFY Central and Login hosts:**
+**Connecting to Amplify Central and Login hosts:**
 
 ```shell
 curl -x {{proxy_host}}:{{proxy_port}} -s -o /dev/null -w "%{http_code}"  https://apicentral.axway.com
@@ -91,7 +119,7 @@ curl -x {{proxy_host}}:{{proxy_port}} -s -o /dev/null -w "%{http_code}"  https:/
 
 A return of **"200"** validates the connection was established.
 
-**Connecting to AMPLIFY Central Event Traffic host, HTTPS:**
+**Connecting to Amplify Central Event Traffic host, HTTPS:**
 
 ```shell
 curl -x {{proxy_host}}:{{proxy_port}} -s -o /dev/null -w "%{http_code}" https://ingestion.datasearch.axway.com
@@ -99,7 +127,7 @@ curl -x {{proxy_host}}:{{proxy_port}} -s -o /dev/null -w "%{http_code}" https://
 
 A return of **"200"** validates the connection was established.
 
-**Connecting to AMPLIFY Central Event Traffic host, Lumberjack:**
+**Connecting to Amplify Central Event Traffic host, Lumberjack:**
 
 ```shell
 curl -x socks5://{{proxy_host}}:{{proxy_port}} ingestion-lumberjack.datasearch.axway.com:453

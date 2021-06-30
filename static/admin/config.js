@@ -310,6 +310,13 @@ const collections = [{
   description: 'All pages relating to AMPLIFY Central.',
   format: 'frontmatter',
 }, {
+  ...docsDefaults('central/env_gw_mgmt', 'central/env_gw_mgmt'),
+  name: 'env_gw_mgmt',
+  label: 'Manage your environments and gateways documentation',
+  label_singular: 'page in Manage your environments and gateways',
+  description: 'All pages relating to Manage your environments and gateways.',
+  format: 'frontmatter',
+}, {
   ...docsDefaults('central/mesh_management', 'central/mesh_management'),
   name: 'mesh_management',
   label: 'Mesh management documentation',
@@ -321,7 +328,7 @@ const collections = [{
   name: 'amplify_relnotes',
   label: 'AMPLIFY Release notes',
   label_singular: 'page in AMPLIFY Release notes section',
-  description: 'Release notes for AMPLIFY Central and AMPLIFY Catalog',
+  description: 'Release notes for AMPLIFY Central.',
   format: 'frontmatter',
 }, {
   ...docsDefaults('central/connect-api-manager', 'central/connect-api-manager'),
@@ -345,11 +352,18 @@ const collections = [{
   description: 'All pages relating to Connect Azure Gateway.',
   format: 'frontmatter',
 }, {
+  ...docsDefaults('central/connected_agent_common_reference', 'central/connected_agent_common_reference'),
+  name: 'connected_agent_common_reference',
+  label: 'Connected agent - Common reference',
+  label_singular: 'page in Connected agent - Common reference',
+  description: 'All pages relating to Connected agent - Common reference.',
+  format: 'frontmatter',
+}, {
   ...docsDefaults('central/cli_central', 'central/cli_central'),
   name: 'cli_central',
-  label: 'Get started with AMPLIFY Central CLI',
-  label_singular: 'page in AMPLIFY Central CLI',
-  description: 'All pages relating to AMPLIFY Central CLI.',
+  label: 'Get started with Axway Central CLI',
+  label_singular: 'page in Axway Central CLI',
+  description: 'All pages relating to Axway Central CLI.',
   format: 'frontmatter',
 }, {
   ...docsDefaults('catalog', 'catalog'),
@@ -357,6 +371,13 @@ const collections = [{
   label: 'AMPLIFY Unified Catalog documentation',
   label_singular: 'page in AMPLIFY Unified Catalog',
   description: 'All pages relating to AMPLIFY Unified Catalog.',
+  format: 'frontmatter',
+}, {
+  ...docsDefaults('catalog/catalog_relnotes', 'catalog'),
+  name: 'catalog_relnotes',
+  label: 'AMPLIFY Unified Catalog Release notes',
+  label_singular: 'page in AMPLIFY Unified Catalog Release notes section',
+  description: 'Release notes for AMPLIFY Unified Catalog.',
   format: 'frontmatter',
 }, {
   ...docsDefaults('contribution_guidelines', 'contributing'),
@@ -388,7 +409,7 @@ const collections = [{
   folder: 'content/en/blog/friends',
 }];
 
-const cms_branch = window.location.hostname.includes('developjan21') ? 'developjan21' : 'master';
+const cms_branch = window.location.hostname.includes('developaug21') ? 'developaug21' : 'master';
 
 const config = {
   backend: {

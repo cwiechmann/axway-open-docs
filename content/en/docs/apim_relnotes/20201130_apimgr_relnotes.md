@@ -1,7 +1,7 @@
 ---
 title: API Gateway and API Manager 7.7 November 2020 Release Notes
 linkTitle: API Gateway and API Manager November 2020
-weight: 60
+weight: 110
 date: 2020-11-05
 ---
 ## Summary
@@ -32,6 +32,18 @@ In this update, additional API life cycle events (deprecate, undeprecate, upgrad
 
 For more information, see [System property changes](/docs/apim_reference/system_props/).
 
+### YAML configuration store (Technical preview capability)
+
+This update includes bug fixes and enhanced functionality for YAML configuration as follows:
+
+* Support for conversion of [XML configuration fragments to YAML configuration fragments](/docs/apim_yamles/apim_yamles_cli/yamles_cli_convert#convert-your-xml-configuration-fragment-to-a-yaml-configuration-fragment).
+* Support for [import and export](/docs/apim_yamles/apim_yamles_cli/yamles_cli_importexport) of YAML configuration fragments.
+* Allow user-controlled file names for YAML entities.
+* Improved layout in YAML entity files.
+* Enhanced support for managing more configuration content in [externalized files](/docs/apim_yamles/yamles_externalized_files).
+
+See the [September 2020](/docs/apim_relnotes/20200930_apimgr_relnotes/#yaml-configuration-store-technical-preview-capability) release notes for an overview of this technical preview, and the [YAML configuration](/docs/apim_yamles/) documentation for more detailed information.
+
 ## Important changes
 
 There are no major changes in this update.
@@ -40,9 +52,9 @@ There are no major changes in this update.
 
 ## Deprecated features
 
-<!-- As part of our software development life cycle we constantly review our API Management offering. In this update, the following capabilities have been deprecated. -->
+As part of our software development life cycle we constantly review our API Management offering. In this update, the following capabilities have been deprecated:
 
-No capabilities have been deprecated in this update.
+* API Gateway and API Manager versions 7.5.x and 7.6.x reached end of support (EOS) in November 2020.
 
 ## Removed features
 

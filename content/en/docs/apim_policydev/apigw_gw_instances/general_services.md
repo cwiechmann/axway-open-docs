@@ -27,6 +27,8 @@ You can also add multiple relative paths to a HTTP services group, where each pa
 
 This means that relative paths configured under a HTTP services group are bound to all HTTP interfaces configured for that group. If you have two interfaces listening on ports `8080` and `8081`, API Gateway handles requests to `http://<HOST>:8080/a` and `http://<HOST>:8081/a` identically.
 
+{{< alert title="Note" color="primary" >}}The maximum length for a custom URL used in the HTTP connection is limited by the "Maximum Memory per Request" field when configuring a port in the HTTP Services interface of Policy Studio.{{< /alert >}}
+
 ### Example configuration
 
 In this example configuration, a SSL validation policy is added to process requests to `http://<HOST>:443/a`, while the existing Schema Validation policy continues to handle requests for `http://<HOST>:8080/a`. To distinguish between receiving requests on the two different ports, a new `SSL HTTP Services Group` is added alongside the existing `HTTP Services Group`. The new group opens a single HTTPS interface that listens on the SSL port `443`, and is configured with a relative path of `/a` to handle requests on this path:
@@ -180,17 +182,16 @@ For more information on the syntax of this setting, see the [OpenSSL documentati
     * Enter a number (for example, `512`), and the server automatically generates DH parameters with a prime number of the correct size.
     * Paste the Base64 encoding of an existing serialized DH parameters file. You can use standard DH parameters based on known good prime numbers. OpenSSL ships with the `dh512.pem` and `dh1024.pem` files. For example, you can set the DH parameters to the following Base64-encoded string in `pdh512.pem`:
 
-  ```
-  -----BEGIN DH PARAMETERS-----
-  MEYCQQD1Kv884bEpQBgRjXyEpwpy1obEAxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1X
-  pKgVfAgEC
-  -----END DH PARAMETERS-----
-  ```
+    ```
+    -----BEGIN DH PARAMETERS-----
+    MEYCQQD1Kv884bEpQBgRjXyEpwpy1obEAxnIByl6ypUM2Zafq9AKUJsCRtMIPWakXUGfnHy9iUsiGSa6q6Jew1X
+    pKgVfAgEC
+    -----END DH PARAMETERS-----
+    ```
 
     The DH parameters setting is required if the server is using a DSA-keyed certificate, but also has an effect when using RSA-based certificates. DH (or similar) key agreement is required for DSA-based certificates because DSA keys cannot be trivially used to encrypt data like RSA keys can.
 
     {{< alert title="Note" color="primary" >}}The EDH key is always used once only to guarantee forward secrecy. This ensures that if the key is compromised, previous keys is not compromised.{{< /alert >}}
-
 * **SSL Protocol Options**: You can configure the following SSL protocol options:
 
     * **Do not use the SSL v3 protocol**: SSL v3 is not used for incoming connections to avoid any weaknesses in this protocol. This is selected by default.
@@ -199,7 +200,7 @@ For more information on the syntax of this setting, see the [OpenSSL documentati
     * **Do not use the TLS v1.2 protocol**: TLS v1.2 is not use for incoming connections to avoid any weaknesses in this protocol. This is *not* selected by default.
     * **Do not use the TLS v1.3 protocol**: TLS v1.3 is not use for incoming connections to avoid any weaknesses in this protocol. This is *not* selected by default.
     * **Prefer local cipher preferences over client's proposal**: When choosing a cipher during the SSL/TLS handshake, the client's preferences are selected by default from the list of ciphers supported by the client and the server. When this option is selected, the server's preferences are used instead. This option is *not* selected by default. For more details on ciphers, see the [OpenSSL documentation](https://www.openssl.org/docs/man1.1.1/man1/ciphers.html).
-    * **Disable renegotiation in TLSv1.2 and earlier**: Disable renegotiation, do not send HelloRequest messages, and ignore renegotiation requests via ClientHello. This is selected by default.
+    * **Disable renegotiation in TLSv1.2 and earlier**: Disable renegotiation, do not send HelloRequest messages, and ignore renegotiation requests via ClientHello. This is selected by default. If you disable this option and allow SSL renegotiation, only secure renegotiation will be possible.
 
 ### Configure conditions for an HTTP Interface
 
@@ -308,9 +309,7 @@ Because packet sniffers are mainly used as passive monitoring agents, they are u
 
 You can then add a relative path service to this group by right-clicking the `Packet Sniffer Group`, and selecting **Add Relative Path**. Enter a path in the field provided, and select the policy to dispatch messages to when the packet sniffer detects a request for this path (after it assembles the packets). For example, if the relative path is configured as `/a`, and the packet sniffer assembles packets into a request for this path, the request is dispatched to the policy selected in the relative path service.
 
-Finally, to add the packet sniffer, right-click the `Packet Sniffer Group` node, and select **Packet Sniffer**
-
-> **Add**, and complete the following fields:
+Finally, to add the packet sniffer, right-click the `Packet Sniffer Group` node, select **Packet Sniffer**, then **Add** menu option, and complete the following fields:
 
 **Device to Monitor**: Enter the name of the network interface that the packet sniffer monitors. The default is `any` (valid on Linux only). On UNIX, network interfaces are usually identified by names like `eth0` or `eth1`. On Windows, names are more complicated (for example, `\Device\NPF_{00B756E0-518A-4144 ... }`).
 
@@ -320,7 +319,7 @@ The packet sniffer uses the `libpcap` library filter language to achieve this. T
 
 The following table lists a few examples of common filters and explains what they filter:
 
-| Filter expression                           | Description                                                                           |
+| Filter expression                            | Description                                                                           |
 | -------------------------------------------- | ------------------------------------------------------------------------------------- |
 | `port 80`                                    | Capture only traffic for the HTTP Port (`80`).                                        |
 | `host 192.168.0.1`                           | Capture traffic to and from IP address `192.168.0.1`.                                 |

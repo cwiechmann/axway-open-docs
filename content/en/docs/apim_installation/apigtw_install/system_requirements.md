@@ -29,16 +29,16 @@ Axway makes every effort to add support for new kernels and distributions in a t
 
 Your Linux system must have the `LANG` environment variable set. If this variable is not configured correctly, your system might have issues handling Unicode characters in file names. A full installation of Linux should configure this for you automatically. If you are running the API Gateway in a Docker image that you have built, set this variable in your Dockerfile as follows:
 
- ```
+```
 ENV LANG=en_US.UTF-8
 ```
 
-This variable is set for you in EMT mode.
+This variable is automatically set for you in EMT mode.
 
-In CentOS 8.x and Red Hat Enterprise Linux 8.x `glibc` no longer includes `libnsl` library. This was included in earlier releases and is required by the API Gateway. To install the library:
+In CentOS 8.x and Red Hat Enterprise Linux 8.x, the GNU C Library (glibc) no longer includes `libnsl` and `glibc-langpack-en` libraries. However, those were included in previous releases and are required by the API Gateway. To install the missing libraries, run the following command:
 
 ```
-sudo yum install libnsl
+sudo yum install libnsl glibc-langpack-en
 ```
 
 ### Windows
@@ -82,15 +82,13 @@ This section describes the supported database versions.
 
 API Gateway and API Manager support the following relational databases to store metrics data:
 
-* MySQL Server 5.6, 5.7
-* MariaDB 5.5, 10.1
+* MySQL Server 5.7, 8.0
+* MariaDB 10.2, 10.5
 * Microsoft SQL Server 2016, 2017, and 2019
 * Oracle 12.2, 18c, and 19c
 * IBM DB2 10.5
 
-{{< alert title="Note" color="primary" >}}If you are using MariaDB you must use the MySQL JDBC driver with the MySQL database connection URL (for example, `jdbc:mysql://DB_HOST:3306/reports`) instead of the provided MariaDB version. You must also ensure that you are using a MySQL JDBC driver version 5.1.x or earlier (for example, 5.1.47), as later versions (for example, 6.x, 8.x) are not currently supported.{{< /alert >}}
-
-For more details, see [Configure the metrics database](/docs/apim_installation/apigtw_install/metrics_db_install).
+For more details, see [Install and configure a metrics database](/docs/apim_installation/apigtw_install/metrics_db_install).
 
 ### Apache Cassandra
 

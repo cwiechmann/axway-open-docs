@@ -1,14 +1,14 @@
 ---
-title: Deploy your agents with AMPLIFY CLI
-linkTitle: Deploy your agents with AMPLIFY CLI
+title: Deploy your agents with Axway CLI
+linkTitle: Deploy your agents with Axway CLI
 draft: false
 weight: 20
-description: Learn how to deploy your agents using AMPLIFY CLI so that you can
-  manage your AWS API Gateway environment within AMPLIFY Central.
+description: Learn how to deploy your agents using Axway CLI so that you can
+  manage your AWS API Gateway environment within Amplify Central.
 ---
 ## Before you start
 
-* Read [AMPLIFY Central AWS API Gateway connected overview](/docs/central/connect-aws-gateway/)
+* Read [Amplify Central AWS API Gateway connected overview](/docs/central/connect-aws-gateway/)
 * You will need information on AWS
 
     * The region that the AWS API Gateway resources are hosted in
@@ -19,53 +19,53 @@ description: Learn how to deploy your agents using AMPLIFY CLI so that you can
 
 ## Objectives
 
-Learn how to quickly install and run your Discovery and Traceability agents with basic configuration using AMPLIFY Central CLI.
+Learn how to quickly install and run your Discovery and Traceability agents with basic configuration using Axway Central CLI.
 
-## AMPLIFY Central CLI prerequisites
+## Axway Central CLI prerequisites
 
-* Node.js 8 LTS or later
-* Access to npm package (for installing AMPLIFY cli)
+* [Node.js](https://nodejs.org/en/download/) version 10.13.0 or later
+* Access to npm package (for installing Axway CLI)
 * Access to login.axway.com on port 443
-* Minimum AMPLIFY Central CLI version: 0.5.0 (check version using `amplify central --version`)
+* Minimum Axway Central CLI version: 0.5.0 (check version using `axway central --version`)
 
-For more information, see [Install AMPLIFY Central CLI](/docs/central/cli_central/cli_install/).
+For more information, see [Install Axway Central CLI](/docs/central/cli_central/cli_install/).
 
 ## Installing the agents
 
 ### Step 1: Folder preparation
 
-Create an empty directory where AMPLIFY CLI will generate files. Run all AMPLIFY Central CLI from this directory.
+Create an empty directory where Axway CLI will generate files. Run all Axway Central CLI from this directory.
 
-### Step 2: Identify yourself to AMPLIFY Platform with AMPLIFY CLI
+### Step 2: Identify yourself to Amplify Platform with Axway CLI
 
-To use Central CLI to log in with your AMPLIFY Platform credentials, run the following command:
+To use Central CLI to log in with your Amplify Platform credentials, run the following command:
 
 ```shell
-amplify auth login
+axway auth login
 ```
 
 A browser automatically opens.
-Enter your valid credentials (email address and password). Once the “Authorization Successful” message is displayed, go back to AMPLIFY CLI. The browser may be closed at this point.
+Enter your valid credentials (email address and password). Once the “Authorization Successful” message is displayed, go back to Axway CLI. The browser may be closed at this point.
 
-If you are a member of multiple AMPLIFY organizations, you may have to choose an organization.
+If you are a member of multiple Amplify organizations, you may have to choose an organization.
 
 {{< alert title="Note" color="primary" >}}If you do not have a graphical environment, forward the display to an X11 server (Xming or similar tools) using the `export DISPLAY=myLaptop:0.0` command.{{< /alert >}}
 
 ### Step 3: Run the agents' install procedure
 
-AWS agents are delivered in a Docker image provided by Axway. You can run them from any Docker container that can access the AMPLIFY Platform and AWS API Gateway.
-The AMPLIFY Central CLI will guide you through the configuration of the agents. Cloud formation templates are provided to help you setup either an EC2 architecture or an ECS-fargate architecture. You can also decide to not use any of them and deploy the Docker images in your own Docker container architecture.
+AWS agents are delivered in a Docker image provided by Axway. You can run them from any Docker container that can access the Amplify Platform and AWS API Gateway.
+The Axway Central CLI will guide you through the configuration of the agents. Cloud formation templates are provided to help you setup either an EC2 architecture or an ECS-fargate architecture. You can also decide to not use any of them and deploy the Docker images in your own Docker container architecture.
 
 To start the installation procedure, run the following command:
 
 ```shell
-amplify central install agents
+axway central install agents
 ```
 
-If your AMPLIFY subscription is hosted in the EU region, then the following installation command must be used to correctly configure the agents:
+If your Amplify subscription is hosted in the EU region, then the following installation command must be used to correctly configure the agents:
 
 ```shell
-amplify central install agents --region=EU
+axway central install agents --region=EU
 ```
 
 The installation procedure prompts for the following:
@@ -74,7 +74,7 @@ The installation procedure prompts for the following:
 2. Platform connectivity:
    * **Environment**: can be an existing environment or a new one that will be created by the installation procedure
    * **Team**: can be an existing team or a new one that will be created by the installation procedure
-   * **Service account**: can be an existing service account or a new one that will be created by the installation procedure. If you choose an existing one, be sure you have the appropriate public and private keys, as they will be required for the agent to connect to the AMPLIFY Platform. If you choose to create a new one, the generated private and public keys will be provided.
+   * **Service account**: can be an existing service account or a new one that will be created by the installation procedure. If you choose an existing one, be sure you have the appropriate public and private keys, as they will be required for the agent to connect to the Amplify Platform. If you choose to create a new one, the generated private and public keys will be provided.
 3. AWS Configuration Setup options:
    * **Deployment Type** select between `EC2`, `ECS Fargate`, or `Docker Container Only`
    * **Region** of the AWS API Gateway resources
@@ -91,7 +91,7 @@ The installation procedure prompts for the following:
      * **Instance Type** defaulted to `t3.micro`
      * **EC2 SSH Key Pair** the name of the EC2 Key Pair that will be installed on the instance
      * **VPC ID** the ID of the VPC (ex. vpc-xxxxxxx) to deploy the instance in, leave blank to have the CloudFormation deploy the entire EC2 Infrastructure
-     * **Public IP Address** when using existing infrastructure, set to `No` if the VPC has an Internet Gateway, as the Instance needs internet Access to communicate with AMPLIFY
+     * **Public IP Address** when using existing infrastructure, set to `No` if the VPC has an Internet Gateway, as the Instance needs internet Access to communicate with Amplify
      * **Security Group ID** when using existing infrastructure, the security group (ex. sg-xxxxxxx) to assign to the EC2 instance
      * **Subnet ID** when using existing infrastructure, the subnet (ex. subnet-xxxxxx) to deploy the EC2 instance to
      * **SSH IP Range** defaulted to 0.0.0.0/0, set to the IP range that is allowed to SSH to the EC2 instance
@@ -126,7 +126,7 @@ traceability_lambda.zip
 
 `da_env_vars.env` / `ta_env_vars.env` contains the specific configuration you entered during the installation procedure. These files are required to start the agents.
 
-`private_key.pem` and `public_key.pem` are the generated key pair the agent will use to securely talk with the AMPLIFY Platform (if you choose to let the installation generate them).
+`private_key.pem` and `public_key.pem` are the generated key pair the agent will use to securely talk with the Amplify Platform (if you choose to let the installation generate them).
 
 `amplify-agents-deploy-all.yaml` / `amplify-agents-ec2.yaml` / `amplify-agents-ecs-fargate.yaml` / `amplify-agents-resources.yaml` are the CloudFormation files to configure AWS services / infrastructure.
 
@@ -167,7 +167,7 @@ To complete the install, run the following AWS CLI command:
 * If necessary, create EC2 KeyPair, for EC2 login:
     * This command creates the EC2 Key Pair, if necessary, and saves the private key to MyKeyPair.pem.
 * Create the SSM parameter:
-    * These commands save the AMPLIFY Private and Public Keys to the AWS SSM Parameter Store.
+    * These commands save the Amplify Private and Public Keys to the AWS SSM Parameter Store.
 * Deploy the CloudFormation Stack:
     * This command deploys the CloudFormation template using all the resources uploaded to S3. The end result will be a running EC2 instance with the agents installed and logging to CloudWatch.
 * Check the CloudFormation Stack:
@@ -201,15 +201,15 @@ To complete the install, run the following AWS CLI command:
     AWS_AUTH_SECRETKEY=Your_SecretAccessKey
 
   - Pull the latest image of the Discovery Agent:
-    docker pull axway-docker-public-registry.bintray.io/agent/aws-apigw-discovery-agent:latest
+    docker pull axway.jfrog.io/ampc-public-docker-release/agent/aws-apigw-discovery-agent:latest
   - Pull the latest image of the Traceability Agent:
-    docker pull axway-docker-public-registry.bintray.io/agent/aws-apigw-traceability-agent:latest
+    docker pull axway.jfrog.io/ampc-public-docker-release/agent/aws-apigw-traceability-agent:latest
   - Run the latest Discovery Agent:
     docker run --env-file "$(pwd)"/da_env_vars.env -v "$(pwd)":/keys \
-        axway-docker-public-registry.bintray.io/agent/aws-apigw-discovery-agent:latest
+        axway.jfrog.io/ampc-public-docker-release/agent/aws-apigw-discovery-agent:latest
   - Run the latest Traceability Agent:
     docker run --env-file "$(pwd)"/ta_env_vars.env -v "$(pwd)":/keys \
-        axway-docker-public-registry.bintray.io/agent/aws-apigw-traceability-agent:latest
+        axway.jfrog.io/ampc-public-docker-release/agent/aws-apigw-traceability-agent:latest
 ```
 
 * Create, if necessary, and upload all files to your S3 bucket:
@@ -218,7 +218,7 @@ To complete the install, run the following AWS CLI command:
     * This command creates the Access and Secret Key Pair.
 * Add the results from the Key Pair creation above into the environment files, da_env_vars.env & ta_env_vars.env, after the appropriate variables, `AWS_AUTH_ACCESSKEY=` and `AWS_AUTH_SECRETKEY=`.
 * Pull the latest images of the Discovery/Traceability Agents:
-    * These two commands pull the latest released agents from axway-docker-public-registry.bintray.io.
+    * These two commands pull the latest released agents from axway.jfrog.io/ampc-public-docker-release/agent.
 * Run the latest images of the Discovery/Traceability Agents:
     * These two commands run the Docker Containers using the created environment files, and mounting the directory of the location of the appropriate keys, `public_key.pem` & `private_key.pem`, which were either generated during the installation, or available from an existing service account.
 

@@ -1,7 +1,7 @@
 ---
 title: API Gateway and API Manager 7.7 May 2020 Release Notes
 linkTitle: API Gateway and API Manager May 2020
-weight: 70
+weight: 140
 date: 2020-03-11T00:00:00.000Z
 ---
 ## Summary
@@ -272,6 +272,7 @@ The following are known issues for this update.
 | RDAPI-16486 | Changes in the mapper always require a reload in the Execute Data Maps filter and once reloaded then providing values for the required parameters must be repeated |
 | RDAPI-15981 | Scopes fields for API Key remain visible even if Application Scopes are disabled                                                                                   |
 | RDAPI-11143 | Discrepancy with API retirements dates                                                                                                                             |
+| RDAPI-23063 | Policy Studio 2020 May release can open projects from future releases                                             |
 
 ### Policy Studio help documentation
 

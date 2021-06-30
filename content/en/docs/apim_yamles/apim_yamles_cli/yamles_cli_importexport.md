@@ -24,7 +24,9 @@ The following options in the YAML CLI are related to import and export of YAML c
 
 ## Control data export with the _fragment.yaml file
 
-The `_fragment.yaml` file is used to control what data is exported from a source configuration to create a YAML configuration fragment. It is also used to determine how to import a YAML configuration fragment into another configuration. The following is an example of a `_fragment.yaml` file:
+The `_fragment.yaml` file is used to control what data is exported from a source configuration to create a YAML configuration fragment. It is also used to determine how to import a YAML configuration fragment into another configuration.
+
+The following is an example of a `_fragment.yaml` file:
 
 ```yaml
 ---
@@ -45,11 +47,15 @@ cutBranchIfPresent:
 - /Policies/Policy Library/WS-Policy/Test Timestamp is Absent
 ```
 
-### How the _fragment.yaml file is used for export
+### Use the _fragment.yaml file to export
 
-The `export` option uses the `_fragment.yaml` file passed in the `--export-descriptor` parameter to determine what data to export from the source configuration. The configuration fragment that `export` generates contains a `META-INF/_fragment.yaml` file with the same content as the one passed to it in the `--export-descriptor` parameter, with some minor modifications to enable required flags, if they are not already enabled.
+The `export` option uses the `_fragment.yaml` file passed in the `--export-descriptor` parameter to determine what data to export from the source configuration.
+
+The configuration fragment that `export` generates contains a `META-INF/_fragment.yaml` file with the same content as the one passed to it in the `--export-descriptor` parameter, with some minor modifications to enable required flags, if they are not already enabled.
 
 The YamlPKs listed in `addIfAbsent` and `addOrReplace` are combined to provide the list of selected entities to export. If an entity is listed in either section, they are included in the exported YAML configuration. All child entities of these selected entities are also exported, even if they are not explicitly listed. All parent entities of the selected entities are also exported.
+
+You can also export all entities, along with their related types, using a `_fragment.yaml` with flags set to EXPORT_ENTITIES and with the root PK `/` specified in `addIfAbsent`.
 
 The flags have the following meaning at export time:
 
@@ -62,7 +68,9 @@ The flags have the following meaning at export time:
 
 `EXPORT_TYPES` and `EXPORT_TRUNKS` are always enabled, meaning that they are set even if they are not provided in the file provided through the `--export-descriptor` parameter to the `export` command.
 
-The `EXPORT_TYPES` flag ensures all the type information for the selected entities is exported. Type information for the parent entities and the child entities is also included. The type information is stored at `META-INF/_types.yaml`. If this flag is disabled, only entity types for the selected entities are exported.
+The `EXPORT_TYPES` flag ensures all the type information for the selected entities is exported. Type information for the parent entities and the child entities is also included. The type information is stored at `META-INF/types/`. If this flag is disabled, only entity types for the selected entities are exported.
+
+You can also export all the type definitions only from a YAML configuration by supplying a `_fragment.yaml` with flags set to EXPORT_TYPES and no `addIfAbsent` or `addOrReplace` entries.
 
 If `EXPORT_CLOSURE` is enabled, all entities referred to by the selected entities and their children are also exported. The type information for these entities will also be included. If this flag is disabled, the fragment might not contain all entities that are referred to from those included in the fragment. In this case, the YAML configuration can only be validated with the `--allow-invalid-ref` parameter. For more information, see [how to allow unresolved references](/docs/apim_yamles/apim_yamles_cli/yamles_cli_validate/#disable-entity-reference-check).
 
@@ -70,7 +78,7 @@ The `EXPORT_TRUNKS` flag ensures that all parent entities of the selected entiti
 
 The `cutBranchIfPresent` field is not used during export, but it can be set at export time to control what entities might get removed when the fragment is imported.
 
-### How the _fragment.yaml file is used for import
+### Use the _fragment.yaml file to import
 
 A source configuration gets imported into a target configuration. The `META-INF/_fragment.yaml` file in the source configuration is optional for import. If it does not exist, all entities in the source are added to the target configuration only if they do not already exist in the target. This is equivalent to having YamlPKs for all entities listed in the `addIfAbsent` field.
 
@@ -95,8 +103,8 @@ You can specify the source configuration using the `--source` parameter as a dir
 
 You can specify other parameters as follows:
 
-`--export-descriptor`: Specifies the `_fragment.yaml` file, which determines what gets exported.
-`--targz`: Generates a `.tar.gz` file of the newly created YAML configuration fragment.
+* `--export-descriptor`: Specifies the `_fragment.yaml` file, which determines what gets exported.
+* `--targz`: Generates a `.tar.gz` file of the newly created YAML configuration fragment.
 
 The passphrase is not needed for the `export` command. If the source configuration is encrypted with a passphrase, the generated YAML configuration fragment will be encrypted with the same passphrase. It can be changed later using the `encrypt` or [`change-passphrase`](/docs/apim_yamles/apim_yamles_cli/yamles_cli_ecryption)  commands.
 
@@ -142,9 +150,18 @@ You can specify the source and target configuration using the `--source` and `--
 
 You can use the `--targz` parameter to generate a `.tar.gz` file from the updated target configuration. If the target configuration is already a `.tar.gz` file, this parameter is ignored as the result is already packaged into a `.tar.gz` file.
 
-If either the source or target configuration is encrypted with a non-default passphrase, the passphrases must be provided via the `--source-passphrase` or `target-passphrase` parameters respectively. If source and target configurations have different passphrases, the source is re-encrypted in a temporary location before it is imported into the target configuration. Passphrase checking is performed on both the source and target configurations where possible.
+If either the source or target configuration is encrypted with a non-default passphrase, the passphrases must be provided via the `--source-passphrase` or `--target-passphrase` parameters respectively. If source and target configurations have different passphrases, the source is re-encrypted in a temporary location before it is imported into the target configuration. Passphrase checking is performed on both the source and target configurations where possible.
 
-To check the passphrase, an ESConfiguration entity must exist in the configuration. If a passphrase check cannot be performed, a warning is shown on stdout. If passphrase checks cannot be done, and your configurations contains encrypted data, you must ensure the passphrases for the source and target configurations are correct so that the sensitive data can be decrypted successfully from the resulting target configuration. The target configuration passphrase is used for the updated target configuration that contains the merged configuration.
+To check the passphrase, an ESConfiguration entity must exist in the configuration. If a passphrase check cannot be performed, a warning is shown on stdout. If passphrase checks cannot be done and your configurations contains encrypted data, you must ensure the passphrases for the source and target configurations are correct so that the sensitive data can be decrypted successfully from the resulting target configuration. The target configuration passphrase is used for the updated target configuration that contains the merged configuration.
+
+If a source configuration contains `{{file "..." }}` placeholders pointing to an absolute file, an error might occur at load-time if those files are not present in the system running the CLI. To import these types of configurations, use must the `--allow-unresolved-absolute-files` parameter instead.
+
+When using [Team development in Policy Studio](/docs/apigtw_devops/team_dev_practices/#enable-team-development-in-policy-studio) or when your configuration is fragmented into smaller pieces, it is very likely that you import incomplete, invalid stores into a main store. To workaround these validation issues, you can set two flags with `yamles import`:
+
+* Set `--allow-invalid-ref` if some references can only be resolved in the main store.
+* Set `--allow-invalid-cardinality` if the import returns cardinality errors.
+
+This is to mitigate some legacy small inconsistencies in some entity types. The YAML Entity Store is a little more strict than the Federated Store when an entity gets updated.
 
 The following are examples of how you can use the `import` option in the `yamles` CLI to import a YAML configuration into another YAML configuration.
 
@@ -176,6 +193,18 @@ The following are examples of how you can use the `import` option in the `yamles
 
 ```
 ./yamles import --source /home/user/yaml-source.tar.gz --target /home/user/yaml-target
+```
+
+**Example 6**: Typical Team development import options to overcome intermediate validation issues:
+
+```
+./yamles import --source /home/user/app-part-1 --target /home/user/yaml-main-config --allow-invalid-ref --allow-invalid-cardinality
+```
+
+**Example 7**: Importing a source YAML configuration containing externalized files pointing to absolute files not present on the system:
+
+```
+./yamles import --source /home/user/yaml-source.tar.gz --target /home/user/yaml-target.tar.gz --allow-unresolved-absolute-files
 ```
 
 You can run the following help command for more details on each parameter:
